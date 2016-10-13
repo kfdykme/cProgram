@@ -1,0 +1,31 @@
+#include <stdio.h>
+int main(void){
+	
+	int n,b,g;
+	
+	printf("Enter a number: ");
+	scanf("%d", &n);
+	
+	b = n;
+	g = 1;
+	if( b >=10 ){
+		b =  b / 10;
+		g++;
+	}
+	if( b >=10 ){
+		b =  b / 10;
+		g++;
+	}
+	if( b >=10 ){
+		b =  b / 10;
+		g++;
+	}
+	if( b >=10 ){
+		b =  b / 10;
+		g++;
+	}
+	
+	printf("The number %d has %d digits", n, g);
+	
+	return 0 ;
+}

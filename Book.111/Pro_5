@@ -1,0 +1,52 @@
+//revise from Pro_4.c
+
+#include <stdio.h>
+
+#include <ctype.h> 
+//To ues tpupper()
+
+int main(void){
+	char c;
+	bool b = true;
+	int sum = 0;
+	
+	printf("Enter a word: ");
+	
+	while(b == true){
+		c = getchar();
+		
+		if ('a' <= c && c <= 'z'){
+			c = toupper(c);
+		}
+		
+		switch(c){
+			case 'A' : case 'E': case 'I':  case 'L': case 'N': case 'O': case 'R': case 'S': case 'T': case 'U': 
+				sum += 1;
+				break;
+			case 'D': case 'G':  
+				sum += 2;
+				break;
+			case 'J': case 'X': 
+				sum += 8;
+			case 'K':
+				sum += 5;
+				break;
+			case 'B': case 'C': case 'M': case 'P':
+				sum += 3;
+				break;
+			case 'F': case 'H': case 'V': case 'W': case 'Y': 
+				sum += 4;
+				break;
+			case 'Q': case 'Z':
+				sum += 10;
+				break;
+			case '\n':
+				b = false;
+				printf("Scrabble value: %d", sum);
+				printf("\nThis program is stoped");
+		}	
+	}
+	return 0;
+}
+	
+	

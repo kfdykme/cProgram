@@ -1,0 +1,83 @@
+#include <stdio.h>
+int main(void) {
+
+  // intruction:
+  printf("Enter a letter to choose the program mode. \n");
+  printf
+    (" (a) Use a short type variable to store the value of factorial.In order to print the factorial of the entered number currectly ,what is the maximum value of the number? \n");
+  printf(" (b) Use a int type variable to repeat (a). \n");
+  printf(" (c) Use a long type variable to repeat (a).\n");
+  printf
+    (" (d) Use a long long type variable to repeat (a).(if your compiler supports long long type) \n");
+  printf(" (e) Use a float type variable to repeat (a). \n");
+  printf(" (f) Use a double type variable to repeat (a). \n");
+  printf(" (g) Use a long double  type variable to repeat (a). \n");
+
+  char letter;
+  
+  //test:
+  
+  scanf(" %c", &letter);
+
+  printf("Enter a positive intger: ");
+  int value;
+  scanf("%d", &value);
+
+  switch (letter) {
+   case 'a'://max:7
+    short sFactorial;
+    sFactorial = 1;
+    for (int i = 1; i <= value; i++)
+    	sFactorial *= i;
+    printf("%d",sFactorial);
+    break;
+   case 'b'://max:12
+    int iFactorial;
+    iFactorial= 1;
+    for (int i = 1; i <= value; i++)
+    	iFactorial *= i;
+    printf("%d",iFactorial);
+    break;
+   case 'c'://max:12
+    long lFactorial;
+    lFactorial=1;
+    for (int i = 1; i <= value; i++)
+    	lFactorial *= i;
+    printf("%d",lFactorial);
+    break;
+   case 'd'://max:12
+    long long llFactorial;
+    llFactorial=1;
+    for (int i = 1; i <= value; i++)
+    	llFactorial *= i;
+    printf("%d",llFactorial);
+    break;
+   case 'e':
+    float  fFactorial;
+    fFactorial=1;
+    for (int i = 1; i <= value; i++)
+    	fFactorial *= i;
+    printf("%f",fFactorial);
+    break;
+   case 'f':
+    double dFactorial;
+    dFactorial=1;
+    for (int i = 1; i <= value; i++)
+    	dFactorial *= i;
+    printf("%f",dFactorial);
+    break;
+   case 'g':
+    long double ldFactorial;
+    ldFactorial=1;
+    for (int i = 1; i <= value; i++)
+    	ldFactorial *= i;
+    printf("%f",ldFactorial);
+    break;
+  
+  }
+  //test:
+  //while ( getchar() == '\n')
+  	//goto test; 
+  return 0 ;
+}
+  

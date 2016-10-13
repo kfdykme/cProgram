@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main(void){
+	float a,b,c,re;
+	char s1,s2;
+	
+	printf("Enter a expression: ");
+	scanf("%f %c %f %c %f", &a,&s1,&b,&s2,&c);
+	
+	switch(s1){
+		case '+':
+			re = a+b;
+			break;
+		case '-':
+			re = a-b;
+			break;
+		case '*':
+			re = a*b;
+			break;
+		case '/' :
+			re = a/b;
+			break;
+	}
+	
+	switch(s2){
+		case '+':
+			re = re+c;
+			break;
+		case '-':
+			re = re-c;
+			break;
+		case '*':
+			re = re*c;
+			break;
+		case '/' :
+			re = re/c;
+			break;
+	}
+	
+	printf("Value of expression: %.2f", re);
+	
+	return 0;
+}
+	

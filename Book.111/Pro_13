@@ -1,0 +1,26 @@
+#include <stdio.h>
+  
+int main(void){
+	char a;
+	int b = 0;
+	float aL,bL;
+	aL = -1;
+	bL = 1;
+  	
+	printf("Enter a expression: ");
+	do {
+		scanf("%c", &a);
+		
+		if ( a == ' ')
+			bL = bL + 1;
+		if ( a != ' ')
+			aL = aL +1;
+	} while ( a != '\n');
+	
+	//printf("aL: %.1f ,bL: %.1f\n", aL,bL);  just to test.
+	printf("Average word length: %.1f", (aL) / (bL));
+	
+	return 0;
+}
+	
+	

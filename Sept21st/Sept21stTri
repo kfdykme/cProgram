@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+#define PI 3.14159f
+/*
+   Name: CalcVolume.c
+   Purpose:Enter a radius of a
+    sphere and print the volume
+     of the sphere.
+   Date:9.21.2016
+*/
+
+int main(void){
+	int r;
+	float v;
+	
+	printf("Enter a radius:");
+	scanf("%d", &r);
+	
+	v = 4.0f/3.0f *PI*r*r*r;
+	
+	printf("The volume is %.1f",
+	v);	
+}
+   

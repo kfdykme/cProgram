@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main(void){
+	
+	int i, j;
+  to:
+	printf("Enter a number to define i and j( i j): ");
+	scanf("%d %d", &i, &j);
+	
+	i = ( ( i >= j) + (i >j) /*+ !(i < j) */) - 1;
+	
+	
+	printf("\n%d\n", i);
+	goto to  ;
+	
+	return 0;
+	
+}

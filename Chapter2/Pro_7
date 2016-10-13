@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main(void){
+	int dollar;
+	
+	printf("Enter a dollar amount: ");
+	scanf("%d", &dollar);
+	
+	int a,b,c,d;
+	
+	a = dollar / 20;
+	dollar = dollar - a * 20;
+	b = dollar / 10;
+	dollar = dollar - b * 10;
+	c = dollar / 5;
+	dollar = dollar - c * 5;
+	d = dollar / 1;
+	
+	printf("&20 vills: %d\n", a);
+	printf("&10 vills: %d\n", b);
+	printf("& 5 vills: %d\n", c);
+	printf("& 1 vills: %d\n", d);
+	
+	return 0;
+}

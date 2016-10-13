@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main(void){
+	int score;
+	int gradeNum;
+	
+	printf("Enter numerical grade: ");
+	scanf("%d",&score);
+	
+	gradeNum = score / 10;
+	
+	switch(gradeNum){
+		case 1: case 2: case 3: case 4: case 5: case 0: 
+			printf("F\n");
+			break;
+		case 6:
+			printf("D\n");
+			break;
+		case 7:
+			printf("C\n");
+			break;
+		case 8:
+			printf("B\n");
+			break;
+		case 9: case 10:
+			printf("A\n");
+			break;
+		default :
+			printf("Eorro!\n");
+			break;
+	};
+	
+	return 0;
+	
+}
+	

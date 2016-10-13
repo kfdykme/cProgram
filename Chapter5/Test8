@@ -1,0 +1,108 @@
+#include <stdio.h>
+
+int main(void){
+	
+	int enterHour, enterMin, changedHour;
+	
+	printf("Enter a 24-hour time: ");
+	scanf("%d :%d", &enterHour, &enterMin);
+	
+	if( enterHour > 12){
+		changedHour = enterHour - 12;
+		printf("Equivalent 12-hour time: %d:%d p.m.",changedHour,enterMin);
+		} else {
+		printf("Equivalent 12-hour time: %d:%d a.m.",changedHour,enterMin);	
+		};
+			
+	int nowMinTime;
+	int arriveHour,arriveMin;
+	int am = 1;
+	int minus1, minus2;
+	nowMinTime = 60 * enterHour + enterMin;
+	
+	if ( nowMinTime <= 8 * 60){
+		arriveHour = 10;
+		arriveMin = 16;
+		} else if (nowMinTime > 8 * 60 && nowMinTime <= 9 * 60 + 43){ 
+		minus1 = nowMinTime - 8 * 60;
+		minus2 = 9 * 60 + 43 - nowMinTime; 
+		if ( minus1 < minus2){
+			arriveHour = 10;
+			arriveMin = 16;
+		} else {
+			arriveHour = 11;
+			arriveMin = 52;
+		};
+	   } else if (nowMinTime > 9 * 60 + 43 && nowMinTime <= 11 * 60 + 19){
+	   minus1 = nowMinTime -( 9 * 60 +43) ;
+	   minus2 = 11 * 60 + 19 - nowMinTime;
+	   if ( minus1 < minus2 ){
+	   	arriveHour = 11;
+	   	arriveMin = 52;
+	   } else {
+	   	arriveHour = 1;
+	   	arriveMin = 31;
+	   	am = 0; 
+	   };
+	   } else if (nowMinTime > 11 * 60 + 19 && nowMinTime <= 12 * 60 + 47 ){
+	   minus1 = nowMinTime -( 11 * 60 + 19) ;
+	   minus2 = 12 * 60 + 47 - nowMinTime;
+	   if ( minus1 < minus2 ){
+	   	arriveHour =1 ;
+	   	arriveMin =31 ;
+	   	am = 0;
+	   } else {
+	   	arriveHour = 3 ;
+	   	arriveMin =00 ;
+	   	am = 0;
+	   };
+	   } else if (nowMinTime > 12 * 60 + 47 && nowMinTime <= 14 * 60 ){
+	   minus1 = nowMinTime - (12 * 60 + 47) ;
+	   minus2 = 14 * 60 - nowMinTime;
+	   if ( minus1 < minus2 ){
+	   	arriveHour = 3;
+	   	arriveMin = 00;
+	   	am = 0;
+	   } else {
+	   	arriveHour = 4  ;
+	   	arriveMin = 8;
+	   	am = 0;
+	   };
+	   } else if (nowMinTime >15 * 60 + 45 && nowMinTime <= 19 * 60 ){
+	   minus1 = nowMinTime - (15 * 60 + 45) ;
+	   minus2 = (19 * 60 ) - nowMinTime;
+	   if ( minus1 < minus2 ){
+	   	arriveHour = 5 ;
+	   	arriveMin = 55;
+	   	am = 0;
+	   } else {
+	   	arriveHour = 9 ;
+	   	arriveMin = 20 ;
+	   	am = 0;
+	   };
+	   } else if (nowMinTime > 19 * 60  && nowMinTime <= 21 * 60 + 45 ){
+	   minus1 = nowMinTime - (19 * 60) ;
+	   minus2 = 21 * 60 + 45 - nowMinTime;
+	   if ( minus1 < minus2 ){
+	   	arriveHour = 9 ;
+	   	arriveMin = 20;
+	   	am = 0;
+	   } else {
+	   	arriveHour = 11 ;
+	   	arriveMin = 58;
+	   	am = 0;
+	   };
+	   } else if (nowMinTime > 21 * 60 + 45){
+	   	arriveHour = 11 ;
+	   	arriveMin = 58;
+	   	am = 0;
+	   };
+	
+	if(am = 1){
+	printf(", arriving at %d :%2d a.m", arriveHour, arriveMin);
+} else if (am = 0){
+	printf(", arriving at %d :%2d p.m", arriveHour, arriveMin);	
+};
+	
+	return 0;
+}

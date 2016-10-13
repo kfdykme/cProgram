@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+int main(void){
+	float n;
+	n = 1.0;
+	printf("%f.",n);
+	
+	return 0;
+	}

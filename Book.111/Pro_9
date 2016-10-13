@@ -1,0 +1,36 @@
+//change 12 hour system into 24 hour system.
+
+#include <stdio.h>
+#include <ctype.h>
+int main(void){
+	int eHour, eMin;
+	int pHour, pMin;
+	char t;
+	
+	printf("Enter a 12 hour system time: ");
+	scanf("%d :%d %c", &eHour, &eMin, &t);
+	
+	if ('a' <= t && t <= 'z'){
+			t = toupper(t);
+		}
+//changer t into upper.
+
+	switch(t){
+		case 'A':  
+			pHour = eHour;
+			pMin = eMin;
+			break;
+		case 'P':  
+			pHour = eHour + 12;
+			pMin = eMin;
+			if(pHour == 24){
+				pHour = 0;
+				}
+			break;
+	}
+	
+	printf("Equivalent 24-hour time: %d:%d .", pHour, pMin);
+//
+	
+	return 0;
+}

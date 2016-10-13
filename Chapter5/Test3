@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main(void){
+	float traNum;
+	float pricePTra;
+	float Commission;
+	float OppoCommission;
+	float trade;
+	printf("Enter  trade's numbers : ");
+	scanf("%f", &traNum);
+	
+	printf("Enter value per trade: ");
+	scanf("%f", &pricePTra);
+	
+	trade = traNum * pricePTra;
+	
+	if( trade < 2500){
+		Commission = 30 + 0.017f * trade;} else if ( trade >= 2500 && trade < 6250){
+			Commission = 56 + 0.0066f * trade;
+			 } else if ( trade >= 6250 && trade < 20000){
+			Commission = 76 + 0.0034f * trade;
+			} else if ( trade >= 20000 && trade < 50000){
+			Commission = 100 + 0.0022f * trade;
+			}  else if ( trade >= 50000 && trade < 500000){
+			Commission = 155 + 0.0011f * trade;
+			} else if ( trade >= 500000){
+			Commission = 255 + 0.0009f * trade;
+			};
+	if(Commission <= 39){
+		Commission = 39;
+	}
+	
+	if(traNum < 2000){
+		OppoCommission = 33.03f * traNum;
+	} else if ( trade >= 2000){
+		OppoCommission = 33.02f * traNum;
+	};
+	
+	printf("Commission: %.2f\n", Commission);
+	printf("Opponent's commission: %.2f\n", OppoCommission);
+	
+	return 0;
+	
+}
