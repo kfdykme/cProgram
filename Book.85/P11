@@ -1,0 +1,33 @@
+#include<stdio.h>
+int main(){
+	int n;
+	int a;
+	float e,c,b;
+	
+	e = 1;
+	b = 1;
+		
+	printf("Enter a number to calculate E: \n");
+	
+	scanf("%d", &n);
+	
+	for (int i = 1; i <= n ;i++){
+	//	printf("i %d\n",i);
+		for (a = 1; a<=i;a++){
+			
+	//	printf(" a %d\n",a);
+			b = b * a;
+			
+	//	printf(" b %f\n",b);
+			c = 1/b;
+			
+	//	printf("  c %f\n",c);
+	}
+		
+		e  += c;
+	}
+	
+	printf ("e = %f",e);
+	
+	
+}
