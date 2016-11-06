@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <ctype.h>
+
+int main(void){
+	printf("Enter a sentence: ");
+	int vN = 0;
+	char c;
+	int i = 1;
+	while( i < 2){
+		c = getchar();
+  	    c = toupper(c);
+		
+		switch(c){
+			case 'A' : case 'E': case 'I' : case 'O': case 'U':
+				vN++;
+				break;
+			case '\n':
+				i = 2;
+				break;
+				}
+			
+		}
+	
+	printf("Your sentence contains %d vowels.", vN);
+	
+	return 0;
+}
