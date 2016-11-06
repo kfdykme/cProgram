@@ -1,0 +1,34 @@
+//a easy program
+
+#include <stdio.h>
+int main(void){
+	int a ;
+	
+	a = sizeof(int);
+	printf("%d", a);
+	printf("\t");
+	
+	a = sizeof(short);
+	printf("%d", a);
+	printf("\t");
+	
+	a = sizeof(long);
+	printf("%d", a);
+	printf("\t");
+	
+	a = sizeof(float);
+	printf("%d", a);
+	printf("\t");
+	
+	a = sizeof(double);
+	printf("%d", a);
+	printf("\t");
+	
+	a = sizeof(long double);
+	printf("%d", a);
+	printf("\t");
+	
+	
+	//
+	return 0;
+}
