@@ -13,7 +13,7 @@ int main(void) {
    	}
 	scanf("%c", &s);
 	if ( s == '\n'){
-		i++;
+	//	i++;
 		break;
 	}
 	scanf("%f", &a);
