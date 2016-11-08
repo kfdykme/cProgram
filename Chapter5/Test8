@@ -11,7 +11,7 @@ int main(void){
 		changedHour = enterHour - 12;
 		printf("Equivalent 12-hour time: %d:%d p.m.",changedHour,enterMin);
 		} else {
-		printf("Equivalent 12-hour time: %d:%d a.m.",changedHour,enterMin);	
+		printf("Equivalent 12-hour time: %d:%d a.m.",enterHour,enterMin);	
 		};
 			
 	int nowMinTime;
