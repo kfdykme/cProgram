@@ -14,7 +14,7 @@ int main(void){
 			i = 1;
 		} else if ( i == 1&&N ==' '){
 			i =2;
-		} else if (i==2){
+		} else if (i==2 && N!=' '){
 		printf("%c",N);
 
 		}
