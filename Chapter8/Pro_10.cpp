@@ -1,20 +1,26 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#define LEN 8
+
 int main(void){
-	int h2,h1,m;
-	char c;
+	int departureTimeinM[LEN]={
+		480,583,679,767,840,945,1140,1305};
+	int arrivingTimeinM[LEN] = {
+		616,712,811,900,968,1075,1250,1438};
+	int enterHour,enterMin;
 	
-	printf("Time is:");
-	scanf("%d:%d %c",&h1,&m,&c);
+	printf("Enter a 24-hour time: ");
+	scanf("%d:%d",&enterHour,&enterMin);
 	
-	h2 = h1 %12;
-	c = toupper(c);
-	if (c == 'P'){
-		h2 += 12;
-	}
+	int m1,m2,enterTimeinM = enterHour*60 + enterMin;
 	
-	printf("%d:%d",h2,m);
+	for (int i = 0; i++; i<LEN){
+		m1 = enterTimeinM - departureTimeinM[i] > 0 ? enterTimeinM - departureTimeinM[i]:0;
+		m2 = departureTimeinM[i+1]- enterTimeinM > 0  ?  departureTimeinM[i+1]- enterTimeinM : 0; 
+		} 
 	
-	return 0;
+	//printf("Closest departure time is %d:%d",,);
+	
+	
 }
