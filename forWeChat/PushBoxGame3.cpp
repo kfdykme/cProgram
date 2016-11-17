@@ -100,7 +100,7 @@ int main(void) {
 
   char ord;
 
-  int senceLv = 0,;
+  int senceLv = 0;
   int isFinishGame = FALSE;
   int deScore = 0;
   int ifSence[3] = { TRUE, FALSE, FALSE };
