@@ -2,10 +2,10 @@
 
 int main(void){
 	char c;
-	bool b = true;
 	printf("Enter phone number: ");
-	while(b == true){
-		c = getchar();
+	scanf("%c",&c);
+	while(c != '\n'){
+		scanf("%c",&c);
 		switch(c){
 			case 'A' : case 'B': case 'C': 
 				printf("2");
@@ -43,11 +43,10 @@ int main(void){
 			case '9' :
 			 printf("%c",c);
 			 break;
-			case '\n':
-				b = false;
-				printf("\nThis program is stoped");
 		}	
 	}
+			printf("\nThis program is stoped");
+		
 	return 0;
 }
 	
