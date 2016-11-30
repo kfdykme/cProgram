@@ -16,7 +16,8 @@ int main(void){
 	int n;
 	
 	printf("Enter an RPN expression:");
-	do{
+	
+	for(;;){
 		scanf(" %c",&ch);
 		//printf("\nstack[%d] : %d ch = %d",top,stack[top],ch);
 		
@@ -41,11 +42,15 @@ int main(void){
 				break;
 			case '=':
 				printf("Valur of expressing : %d",pop());
+				printf("\nEnter an RPN expression:");
+			case ' ': case '\n':
+				break;
+			default: 
+				return 0;;
 		}
 			
-	} while( ch != '\n'); 
+	}  
 	
-	return 0;
 }
 
 int do_calc(int n, char mark){
