@@ -9,6 +9,8 @@
 #include <conio.h>
 #include <ctype.h>
 #include <time.h>
+#include <unistd.h>
+
 
 
 #define P '&'
@@ -20,12 +22,19 @@
 #define TRUE 1
 #define FALSE 0
 #define MAX_ARRAY_SIZE 100
+#define BOMB_TIME 0.03 //3s
+#define SHOCK_WAVE_TIME 0.002 //0.2s
+
 //用于判断场上有没有炸弹 如果为TRUE则不再释放炸弹
 int have_bomb = FALSE;
+int have_shock_wave = FALSE;
 //用于判断场上有没有炸弹 如果为TRUE则炸弹爆炸
 int have_more_one_bomb = FALSE;
 //炸弹冲击波可以消除的字符
 char can_through_view[] = {P,E,' ',W};
+
+bool before_time(clock_t check_time, double break_time);
+
 int length_can_through_view = sizeof(can_through_view)/ sizeof(can_through_view[0]);
 /*
 	 bomb_break
@@ -45,6 +54,14 @@ void bomb_break(char bomb_view,char break_view,char can_through_view[], char bom
 	判断游戏是否结束
 */
 void check_is_gameover(int *_y,int *_x, char map[][MAX_ARRAY_SIZE],char over_view);
+
+
+void check_is_gamewin(
+	int *_y,
+	int *_x,
+	char map[][MAX_ARRAY_SIZE],
+	char over_view);
+
 
 /* 
 	clear_view_in_map
@@ -98,7 +115,17 @@ char view_array[][MAX_ARRAY_SIZE]);
 */
 void get_view_x_y(int width, int height, char map[][MAX_ARRAY_SIZE], int *_x, int *_y,char view);
 
+void main_game(
+	int width,
+	int height,
+	char map[][MAX_ARRAY_SIZE],
+	int *_x,
+	int *_y,
+	char view[]);
+
+
 clock_t bomb_break_ = 0;
+
 
 int main(void){
 	/*
@@ -110,61 +137,149 @@ int main(void){
 		view[5] 空白
 	*/
 	char view[6] = { P,W,E,B,C,' '};
-	char test_map[4][MAX_ARRAY_SIZE] = {
+
+	char test_map[4][MAX_ARRAY_SIZE] =
+	 {
 	 {view[1],view[1],view[1],view[1]},
 	 {view[1],BLANK,BLANK,BLANK},
 	 {view[1],BLANK,view[2],view[1]},
-	 {view[1],view[0],view[1],view[1]},};
+	 {view[1],view[0],view[1],view[1]},
+	 };
+
 	int player_x = 0, player_y = 0; 
+	
 	clock_t long_clock_time = clock();
-	double breaktime = 0.1f;
+	
+	double breaktime = 0.001f;
+	
 	get_view_x_y(4,4,test_map,&player_x,&player_y,view[0]);
+	
 	display_view_array(4,4,test_map);
+	main_game(
+		4,
+		4,
+		test_map,
+		&player_x,
+		&player_y,
+		view);
 
-	
-	for(clock_t a;;){
-		//如果时间间隔大于breaktime，就刷新一次屏幕
 
-		a = clock();
-	
-		if(((a - long_clock_time) / (double) CLOCKS_PER_SEC) > breaktime){
-		//记录刷新的时间用于判断时间间隔
-		long_clock_time = clock();
-		
-		//调用
- 	   test_map[player_y][player_x] = have_bomb == TRUE ?  test_map[player_y][player_x] :' ';					control_view_move(4,4,test_map,view,&player_x,&player_y,' ');
-		test_map[player_y][player_x] = have_bomb ? view[3] :view[0];
-		 
-   //  map[*_y][*_x] = view[0];
-		system("clear");	
-		display_view_array(4,4,test_map);
-		clear_view_in_map(view[4], view[5], 4,4,test_map);
- 	
-		}
- 	   system("clear");	
 
-	    display_view_array(4,4,test_map);
-		printf("\n离炸弹爆炸时间： %lf\n",((double) bomb_break_ - a ));
-		printf("炸弹是否爆炸： %lf\n",(have_more_one_bomb 
-		&&(double)((a - bomb_break_) > 3000)));
-		printf("游戏时间： %lf\n",(double)a);	
-		printf("炸弹存在时间: %lf\n",(double)bomb_break_);			printf("间隔时间: %lf\n",((a - long_clock_time) / (double) CLOCKS_PER_SEC));	
-	 		//到达时间后炸弹爆炸
-		if (have_more_one_bomb 
-		&& (double)((a - bomb_break_) > 400000)){
-      	have_more_one_bomb = FALSE; 	  bomb_break(view[3],view[4],can_through_view,test_map);
-      bomb_break_ = clock();
-		 }
-		//printf("1");
-}
+	//printf("%d %d", 1 == (ord = getch()),true);	
   return 0;
 
 }
 
 
+
+void main_game(
+	int width,
+	int height,
+	char map[][MAX_ARRAY_SIZE],
+	int *_x,
+	int *_y,
+	char view[]){
+	clock_t long_clock_time;
+	for(clock_t a;;){
+		//如果时间间隔大于breaktime，就刷新一次屏幕
+
+		a = clock();
+	
+		if (/*(((a - long_clock_time) / (double) CLOCKS_PER_SEC) > breaktime) 
+		&&*/
+		kbhit() ){
+		//记录刷新的时间用于判断时间间隔
+		long_clock_time = clock();
+		
+		//调用
+ 	   map[*_y][*_x] = 
+ 	   	have_bomb == TRUE ? 
+ 	   	map[*_y][*_x] :' ';
+ 	   
+ 	   control_view_move(
+ 	   	width,
+ 	   	height,
+ 	   	map,view,
+ 	   	_x,
+ 	   	_y,
+ 	   	' ');
+		
+		map[*_y][*_x] = 
+		have_bomb ? view[3] :view[0];
+		 
+   //  map[*_y][*_x] = view[0];
+		
+		}
+ 	   system("clear");	
+	    
+	    display_view_array(
+	    	width,
+	    	height,
+	    	map);
+		
+		printf("游戏时间：%0.4lf\n",(a/(double) CLOCKS_PER_SEC));
+		
+		//到达时间后炸弹爆炸
+		if (have_more_one_bomb){
+			printf("间隔时间: %0.2lf\n",((double)BOMB_TIME - ((a - bomb_break_) / (double) CLOCKS_PER_SEC)));	
+	 	
+			if(
+			((a - bomb_break_) / (double) CLOCKS_PER_SEC)
+			> BOMB_TIME){
+				have_more_one_bomb = FALSE; 	 
+  		
+  			  bomb_break(view[3],
+  			  view[4],can_through_view,map);
+  			  
+  			  
+  			  bomb_break_ = clock();
+  			  
+  			  have_shock_wave = TRUE;
+			 }
+		} else if (have_shock_wave){
+			if(
+			((a - bomb_break_) / (double) CLOCKS_PER_SEC)
+			> SHOCK_WAVE_TIME){
+				int a =2 ,b = 2;
+				
+				check_is_gameover(
+					_y,
+					_x,
+					map,
+					view[4]);
+  			 check_is_gamewin(
+  			 	 &a,
+  			 	 &b,
+					map,
+					view[4]);
+  			   
+				clear_view_in_map(
+					view[4],
+					view[5],
+					width,
+					height,
+					map);
+				have_shock_wave = !have_shock_wave;
+ 			}			
+		}		
+	}
+}
+
+/*
+	before_time
+*/
+bool before_time(clock_t check_time, double break_time){
+	return (((clock() - check_time) / (double)CLOCKS_PER_SEC) > break_time);
+}
+
 void control_view_move(int width, int height, char map[][MAX_ARRAY_SIZE], char view[], int *_x,int *_y,char can_go_forward_view){
-	char ord = getch();
-	ord = toupper(ord);
+	char order;
+	
+	order = getch();
+
+	clock_t order_time = clock();
+	
+	order = toupper(order);
  
  	//printf("player_x = %d\nplayer_y = %d\n",*_x,*_y);
 
@@ -174,7 +289,7 @@ void control_view_move(int width, int height, char map[][MAX_ARRAY_SIZE], char v
  	
 //	printf("player_x = %d\nplayer_y = %d\n",*_x,*_y);
 	
-	  switch (ord) {
+	  switch (order) {
       case 'A':
       if (*_x -1 >= 0){
       	if (map[*_y][*_x -1] == can_go_forward_view){
@@ -226,12 +341,24 @@ void control_view_move(int width, int height, char map[][MAX_ARRAY_SIZE], char v
 
 void check_is_gameover(int *_y,int *_x, char map[][MAX_ARRAY_SIZE],char over_view){
   		if ( map[*_y][*_x] == over_view){
-  			system("clear");
+  		//	system("clear");
   			printf("Game over!");
   			exit(0);
   		}
 }	
-   
+
+void check_is_gamewin(
+	int *_y,
+	int *_x,
+	char map[][MAX_ARRAY_SIZE],
+	char over_view){
+  		if ( map[*_y][*_x] == over_view){
+  		//	system("clear");
+  			printf("Game Win!!!!");
+  			exit(0);
+  		}
+}
+		   
          
 void bomb_break(char bomb_view,char break_view,char can_through_view[], char bomb_map[][MAX_ARRAY_SIZE]){
    int bomb_x,bomb_y;
@@ -239,6 +366,9 @@ void bomb_break(char bomb_view,char break_view,char can_through_view[], char bom
    get_view_x_y(4,4,bomb_map,&bomb_x,&bomb_y,bomb_view);
    //printf("%c,%c,%d,%d\n",bomb_view,break_view,bomb_y,bomb_x);
    bomb_map[bomb_y][bomb_x] = break_view;
+   
+   
+   
    for(int j =0;j<length_can_through_view;j++)
    	for(int a = 1; a <= 2; a++){
   	
@@ -307,5 +437,53 @@ void get_view_x_y(int width, int height, char map[][MAX_ARRAY_SIZE], int *_x, in
       }
   }
 }
+/*
+#include <unistd.h>
+#include <conio.h>
 
+#include <stdio.h>
+
+#include <locale.h>
+
+int main() {
+
+    int k;
+
+
+
+//    setlocale(LC_ALL,"chs");
+
+    printf("如果你三秒钟之内什么也不输入，我就输出-1。\n");
+
+    sleep(3);
+
+    if(!_kbhit())
+
+        printf("-1\n");
+
+    else {
+
+        printf("输入了");
+
+        while (1) {
+
+            if (_kbhit()) {
+
+                k=_getch();
+
+				printf("%c",k);
+                
+            } else break;
+
+        }
+
+        printf("\n");
+
+    }
+
+    return 0;
+
+}
+
+*/
 	 
