@@ -37,7 +37,7 @@ int have_shock_wave = FALSE;
 int have_more_one_bomb = FALSE;
 
 //炸弹冲击波可以消除的字符
-char can_through_view[] = {P,E,BLANK};
+char can_through_view[] = {P,E,BLANK,T};
 
 //用于记录放下炸弹的时间，用于计算炸弹爆炸时间
 clock_t bomb_break_ = 0;
@@ -230,29 +230,60 @@ int main(void){
 	*/
 	char view[7] = { P,W,E,B,C,BLANK,T};
 
-	char test_map[4][MAX_SIZE] =
+	char test_map[3][4][MAX_SIZE] =
 	 {
+	 {
+	 {
+	 },
+	 {	
+	 {view[1],view[1],view[1],view[1],view[1],view[1]},
+	 {view[1],view[5],view[6],view[6],view[5],view[6]},
+	 {view[1],view[5],view[2],view[1],view[5],view[1]},
+	 {view[1],view[5],view[1],view[1],view[0],view[1]},
+	 },
+	 {	
 	 {view[1],view[1],view[1],view[1]},
-	 {view[1],view[5],view[5],view[5]},
+	 {view[1],view[5],view[6],view[6]},
 	 {view[1],view[5],view[2],view[1]},
 	 {view[1],view[0],view[1],view[1]},
-	 };
+	 }};
 
 	int player_x = 0, player_y = 0; 
 	
-	current_width = 4;
+	current_width = 6;
 	current_height = 4;
+	char c_map[100][100];
+	
+	for (int y = 0; y < 100 ;y++){
+		 
+		 for (int x = 0; x < 100 ; x++){
+		 	
+		 	c_map[y][x] = view[6];
+		 
+		 }
+	
+	} 
+	
+	for (int y = 0; y < current_height ;y++){
+		 
+		 for (int x = 0; x < current_width ; x++){
+		 	
+		 	c_map[y][x] = test_map[0][y][x];
+		 
+		 }
+	
+	}
 	
 	clock_t long_clock_time = clock();
 	
 	double breaktime = 0.001f;
 	
-	get_view_x_y(test_map,&player_x,&player_y,view[0]);
+	get_view_x_y(c_map,&player_x,&player_y,view[0]);
 	
-	display_view_array(test_map);
+	display_view_array(c_map);
 
 	main_game(
-		test_map,
+		c_map,
 		&player_x,
 		&player_y,
 		view);
@@ -611,7 +642,12 @@ void main_game(
 		system("clear");	
 	    
 	    display_view_array(current_map);
-	    
+		check_is_gameover(
+			_y,
+			_x,
+			current_map,
+			view[2]);
+  	    
 		printf("游戏时间：%0.4lf\n",(current_time/(double) CLOCKS_PER_SEC));
 		
 		//到达时间后炸弹爆炸
@@ -645,6 +681,8 @@ void main_game(
 					_x,
 					current_map,
 					view[4]);
+  			   
+  			  
   			  check_is_gamewin(
 					&emeny_y,
 					&emeny_x,
