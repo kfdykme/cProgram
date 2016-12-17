@@ -25,7 +25,7 @@
 #define BOMB_TIME 0.1 //3s
 #define SHOCK_WAVE_TIME 0.002 //0.2s
 #define EMENY_MOVE_BREAK_TIME 0.04 //2s
-#define GAME_WIN 3
+#define GAME_WIN 4
 
 //vieW数据
 	/*
@@ -61,7 +61,7 @@ char view[7] = { P,W,E,B,C,BLANK,T};
 	  
 
 */
-char data_map[3][M_S][M_S] =
+char data_map[4][M_S][M_S] =
 	 {
 	 {
 	 {view[5],view[5],view[5],view[5],view[5],view[5]},
@@ -88,6 +88,19 @@ char data_map[3][M_S][M_S] =
 	  {"$+   # # #$ # "},
 	  {" +++#+ +#+#+  "},
 	  {"              "}
+	 },
+	 {
+	  {"              "},
+	  {"       $      "},
+	  {"              "},
+	  {"         $    "},
+	  {"   &          "},
+	  {"              "},
+	  {"       $      "},
+	  {"              "},
+	  {"   $          "},
+	  {"   $      $   "},
+	  {"              "}
 	 }};
 /*
 	用来记录第几个“场景”的宽度是多少
@@ -100,10 +113,10 @@ char data_map[3][M_S][M_S] =
 	
 	就是sizeof用错几次懒得去看
 */	 
-int data_width[3] =
- 	{6,16,14};
+int data_width[4] =
+ 	{6,16,14,14};
 //用途同上
-int data_height[3] = {4,5,11};
+int data_height[4] = {4,5,11,11};
 
 
 //开始的行数 就是在菜单那里要在哪一行按了空格就进入游戏
@@ -128,7 +141,7 @@ char can_through_view[] = {P,E,BLANK,T};
 clock_t bomb_break_ = 0;
 
 //用于记录敌人数量 我懒 我数数 我自豪
-int emeny_number[M_S] = {0,1,5};
+int emeny_number[M_S] = {0,1,5,6};
 
 //给敌人的X 和 Y坐标来个出的定义 
 //有多的浪费了内存 （但我并不想在意！！）
@@ -341,11 +354,11 @@ void replace_view_in_map(
 //主程序
 int main(void){
 
-	//角色只有一个嘛 就用指针的形式传入函数内
-	int player_x = 0, player_y = 0; 
 	
 	//”绘制“？整个游戏画面Suoyong所用的数组
 	char c_map[M_S][M_S];
+	//角色只有一个嘛 就用指针的形式传入函数内
+	int player_x = 0, player_y = 0; 
 	
 	//将第一个数组全部变为数组
 	//然后将第二个数组从常量S_X S_Y开始覆盖到第一个数组上
@@ -437,8 +450,22 @@ void check_is_gameover(
 	char over_view){
   		if ( current_map[*_y][*_x] == over_view && game_map_lv != 0){
   		//	system("clear");
-  			printf("\n\n\n\t\tGame over!");
-  			exit(0);
+  			printf("\n\n\n\t\tGame over!\n\t\t按下任意键to restart!");
+			getch();
+			
+			load_map(
+			current_map,data_map[game_map_lv],view);
+	
+	
+
+			//将游戏画面内的角色字符所在的行数列数赋值给变量	
+			get_view_x_y(
+ 		 	current_map,
+  			_x,
+  			_y,
+  			view[0]);
+	//以上是开始游戏前的初始化
+
   		}
 }	
 
@@ -455,12 +482,12 @@ void check_is_gamewin(
 	char current_map[][M_S],
 	char over_view){
 		
-		  printf("%d\n",get_view_number
-  		(current_map,over_view));
+		  //printf("%d\n",get_view_number
+  		//(current_map,over_view));
   		if (get_view_number
   		(current_map,over_view) == 0){
   			is_win = true;
-  			printf("is_win = true"); 
+  		//	printf("is_win = true"); 
   		}
 }
 
@@ -521,9 +548,7 @@ void control_view_move(
 	
 	if (order == 'N'){
 		order = getch();
-		//转换成大写字母 方便switch
-		order = toupper(order);
- 		clock_t order_time = clock();
+			clock_t order_time = clock();
 	} else if (order == 'R'){
 		order = get_random_order(4);
 	}
@@ -531,7 +556,9 @@ void control_view_move(
 		如何移动与之前类似
 		只不过多了用循环判断不同的可前进条件
 	*/
-	
+		//转换成大写字母 方便switch
+		order = toupper(order);
+ 
 	for (int i = 0;i<can_go_forward_view_length;i++){
 	  switch (order) {
 	      case 'A':
@@ -550,6 +577,7 @@ void control_view_move(
 	     	
      	 	} 
       	
+       	break;
      	case 'S':
      		if (*_y + 1 < S_Y +data_height[game_map_lv]){
      			
@@ -564,6 +592,7 @@ void control_view_move(
          
      	    } 
      	
+       	break;
      	case 'D':
      		if (*_x +1 < S_X +data_width[game_map_lv]){
      	
@@ -577,6 +606,7 @@ void control_view_move(
       
      		} 
      
+       	break;
     	 case 'W':
      	
     	 	if (*_y - 1 >= S_Y){
@@ -591,7 +621,7 @@ void control_view_move(
      			}
      	
     	 	} 
-     
+       	break;
         case ' ':
       	
       	//在菜单里面的话空格是确认键 不会放下炸弹
@@ -616,12 +646,12 @@ void control_view_move(
  	     			
  	     			exit(0);
 	      		}
-
-      	} else //放下炸弹
-      	//当然要在场上没有炸弹的时候才能放
-      	if (!have_more_one_bomb ) {
+      	
+      	} else if (!have_more_one_bomb 
+      	) {
   			
-  			have_bomb = TRUE;
+ 	     		
+	      	have_bomb = TRUE;
   			
   			have_more_one_bomb = TRUE;
   			
@@ -629,7 +659,7 @@ void control_view_move(
 			  bomb_break_= clock();
       	
       	}  	   
- 		
+ 				  
  		break; 
    
       }
@@ -713,6 +743,9 @@ void get_emenygroup_x_y(
 		}
 	}
 	}
+//	printf("%d\n",i);
+//	getch();
+//	exit(0);
 }
 	
 
@@ -780,6 +813,7 @@ int get_view_number(
 		 
 		 for (int x = 0; x < M_S ; x++){
 		 	
+		 	if ( y  == S_Y -1)
 		 	current_map[y][x] = ' ';
 		 
 		 }
@@ -885,6 +919,7 @@ void main_game(
  	  // char emeny_order = get_random_order();
  	  current_map[emeny_y[i]][emeny_x[i]] = view[5];
  	  
+ 	  //不在菜单及还没有胜利的时候才有敌人移动
  	  if (!is_win && (game_map_lv != 0)) 
  	  control_view_move(
  	   	'R',
@@ -894,9 +929,10 @@ void main_game(
  	   	&emeny_y[i],
  	   	emeny_can_go_through,
  	   	emeny_can_go_through_length);
- 	   
+ 	//control_view...中只改变了 x y 的值和清楚了旧有的字符
+ 	//并没有添加新的字符的新的位置   
 		current_map[emeny_y[i]][emeny_x[i]] = view[2];
-		
+	 //移动完了就记下时间 用于判断下一次移动	
 		emeny_move_time = clock();
 		}
  	   }	 	
@@ -905,7 +941,7 @@ void main_game(
 		system("clear");	
 	    
 	    display_view_array(current_map);
-		
+		/*
 		printf("敌人数量 = [%d] ",get_view_number(
 			current_map,
 			view[2]));
@@ -914,27 +950,36 @@ void main_game(
 			printf("敌人[%d] (%d,%d)\n",
 				emeny_x[i],emeny_y[i]);
 		}
-		
+		*/
+		//看看游戏结束的条件有没有达成
+		//在显示了画面之后再判断更加自然
+		//这是判断有没有自己炸死自己
 		check_is_gameover(
 					_y,
 					_x,
 					current_map,
 					view[4]);
-					
+		//			
 		for (int i = 0; i<emeny_number[game_map_lv];i++)
+		//判断是不是赢了
+		//加入循环是因为
+		//当一开始没有敌人的时候是不会执行这条语句的
 		check_is_gamewin(
 			current_map,
 			view[2]);
 			
 		
+		//这是判断有没有碰上敌人
 		check_is_gameover(
 			_y,
 			_x,
 			current_map,
 			view[2]);
   	   
+  	   //胜利条件达成
      	if (is_win){
      		
+     		//如果已经是最后一关了 就胜利 跳回菜单
      		if (game_map_lv == GAME_WIN -1){
 		     	printf("\n\n\n\t\tGame Win!!!!");
 				 getch();
@@ -942,7 +987,7 @@ void main_game(
 				 goto after_win_game;
   		   }
   					
-  		
+  		//询问是否下一关
      		
      		printf("\n\n\n\t"
      		       "Go to next or return to menu?(Y/N)");
@@ -953,14 +998,16 @@ void main_game(
 					++game_map_lv;break;
 				 case 'N':
 				 	game_map_lv = 0;
-				 	replace_view_in_map(
+				 	/*replace_view_in_map(
 				 		view[2],
 				 		view[5],
 				 		current_map);
-				 	break;
+				 	*/break;
 				 default:
+				 	//乱按就跳回去 直到做出选择
 				 	goto win_choose;
      		}
+    //这是游戏胜利后 不经过选择 按下任意键盘直接诶跳回菜单 		
     after_win_game: 		
      		system("clear");
      		
@@ -977,48 +1024,65 @@ void main_game(
 	
 			  display_view_array(current_map);
 					  
+			  //每一次从新加载画面都将是否胜利改回为否
 			  is_win = !is_win;
 				}
 
-		 
-		printf("游戏时间：%0.4lf\n",(current_time/(double) CLOCKS_PER_SEC));
+		//显示邮箱时间嘛
+	//up	printf("游戏时间：%0.4lf\n",(current_time/(double) CLOCKS_PER_SEC));
+		
 		//到达时间后炸弹爆炸
+		//如果场上有炸弹
 		if (have_more_one_bomb){
-			printf("间隔时间: %0.2lf\n",((double)BOMB_TIME - ((current_time - bomb_break_) / (double) CLOCKS_PER_SEC)));	
-	 	
+			//如果超过了指定时间
 			if(check_is_over_time(
 				current_time,
 				bomb_break_,
 				BOMB_TIME)){
+				//准备爆炸了 将变量改回
 				have_more_one_bomb = FALSE; 	 
-  		
+  			  
+  			  //调用函数实现爆炸的效果
   			  bomb_break(view[3],
   			  view[4],can_through_view,current_map);  
   			  
+  			  //计时 判断冲击波的消失
   			  bomb_break_ = clock();
 							  
+				//现在场上有冲击波
   			  have_shock_wave = TRUE;
 			 }
-			 
+			 //如果有冲击波
 		} else if (have_shock_wave){
+			//如果冲击波已经存在了一定时间
+			//这是为了保证爆炸效果能被肉眼看见
 			if(
 			check_is_over_time(
 				current_time,
 				bomb_break_,
 				SHOCK_WAVE_TIME)){
 					    	    
-							
+				//将冲击波覆盖的字符改为空白			
 				replace_view_in_map(
 					view[4],
 					view[5],
 					current_map);
-					
+				//现在没有冲击波了	
 				have_shock_wave = !have_shock_wave;
- 			}			
+ 			}			 
 		}		
 	}
 }
 
+/* 
+	replace_view_in_map
+	特定字符替换为另一个字符
+@clear_view						被替换的字符
+@replace_view					  替换的字符
+@view_array[][M_S]				 字符数组
+@M_S 			      			最大长度 用于匹配数组
+		（c99才可以用变长二维数组作参数）
+*/
 
 void replace_view_in_map(
 	char clear_view,
