@@ -2,6 +2,7 @@
 	CBooM
 	（控制台上的）仿炸弹人游戏
 			－枋
+			啊啊啊啊啊啊
 */
 
 #include <stdio.h>
@@ -813,7 +814,6 @@ int get_view_number(
 		 
 		 for (int x = 0; x < M_S ; x++){
 		 	
-		 	if ( y  == S_Y -1)
 		 	current_map[y][x] = ' ';
 		 
 		 }
@@ -821,13 +821,22 @@ int get_view_number(
 	} 
 	
 	//所谓将字符从Xxxx开始覆盖到>......
-	for (int y = 0; y < S_Y +data_height[game_map_lv] ;y++){
+	for (int y = 0; y <= S_Y +data_height[game_map_lv] ;y++){
 		 
-		 for (int x = 0; x < S_X + data_width[game_map_lv] ; x++){
+		 for (int x = 0; x <= S_X + data_width[game_map_lv] ; x++){
 		 	
 		 	if ( x >= S_X && y >= S_Y)
-		 		
-		 		current_map[y][x] = load_map[y-S_Y][x-S_X];
+		 		current_map[y][x] = 		
+		 			load_map[y-S_Y][x-S_X];
+		 	
+		 	// 围一个边框
+		 	if ((( y  == S_Y - 1
+		 		|| y == S_Y + data_height[game_map_lv])
+		 		&& x >= S_X)
+		 		|| (( x == S_X -1 
+		 		|| x == S_X + data_width[game_map_lv])	
+		 			&& y >= S_Y)) 
+		 		current_map[y][x] = '.';
 		 
 		 }
 	
