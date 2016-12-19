@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
 int read_line(char str[], int n);
 
@@ -23,7 +25,7 @@ int read_line(char str[], int n){
 	while((ch = getchar()) == ' ');
 	while( ch != '\n')
 		if ( i < n){
-			if ( ch == ' '&&i>0)
+			if ( isspace(ch) &&i>0)
 				return i;
 			else
 				str[i++] = ch;
