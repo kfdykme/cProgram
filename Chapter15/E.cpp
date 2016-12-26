@@ -3,27 +3,49 @@
 
 #define GOOD_MAX 100
 
-int e_number = 0;
+int e = 0;
+/*			GoodInfo* pGoodInfo = (GoodInfo*)malloc(sizeof(GoodInfo));
+			strcpy(pGoodInfo->good_id,temp.good_id);
+			strcpy(pGoodInfo->good_name,temp.good_name);
+			strcpy(pGoodInfo->good_price, temp.good_price);
+			strcpy(pGoodInfo->good_discount, temp.good_discount);
+			pGoodInfo->good_amount = temp.good_amount;
+			pGoodInfo->good_remain = temp.good_remain;
+			Goods[i] = pGoodInfo;*/
+
 
 typedef struct {
-  int year;
-  int month;
-  int day;
-} Date;
-
-typedef struct {
+  int id;
   char name[20];
   float price;
-  Date date_pru;
-  int enter_ord;
+  float discount;
+  int amount;
 } Goods;
 
 Goods all_g[GOOD_MAX];
 
 void edit_data(Goods g);
 void delete_data(Goods g);
-void inquiry_data(Goods g);
+void inquiry_data(Goods g[]);
 void enter_data(Goods g[]);
+
+all_g[0]{
+	id = 000;
+	name[] = "kfdykme";
+	price = 2.2;
+	discount = 0.7;
+	amount = 1;
+	}
+
+all_g[1] = {
+	id = 001;
+	name[] = "可乐";
+	price = 2.5;
+	discount = 1;
+	amount = 100;
+	}
+
+
 
 int main(void) {
   int order_number;
@@ -47,13 +69,14 @@ int main(void) {
       // delete_data();
       break;
     case 3:
-      // inquiry_data();
+       inquiry_data(all_g);
       break;
     case 4:
       enter_data(all_g);
 
       break;
     default:
+  	printf("无效操作\n\n");
       break;
     }
   }
@@ -63,35 +86,84 @@ int main(void) {
 
 void enter_data(Goods g[]) {
 
-  printf("Enter goods' name: ");
-  scanf("%s", g[e_number].name);
-  printf("Enter goods' price($): ");
-  scanf("%f", &g[e_number].price);
-  printf("Enter goods' pru_date: ");
-  scanf("%d.%d.%d", &g[e_number].date_pru.year,
-        &g[e_number].date_pru.month, &g[e_number].date_pru.day);
-/*		printf("Your entered goods：\n"
-			       "\t name:\t%s\n"
-			       "\t price:\t%0.2f$\n"
-			       "\t data: %d.%d.%d \n"
-			       "\n\n",
-			       all_g[e_number].name,
-			       all_g[e_number].price,
-			       all_g[e_number].date_pru.year,
-			       all_g[e_number].date_pru.month,
-			       all_g[e_number].date_pru.day,
-			       );*/
-
-  printf("Your entered goods：\n"
-          "\t name:\t%s\n"
-          "\t price:\t%0.2f$\n"
-          "\t data: %d.%d.%d \n"
-          "\n\n",
-          g[e_number].name,
-          g[e_number].price,
-          g[e_number].date_pru.year,
-          g[e_number].date_pru.month,
-          g[e_number].date_pru.day);
-          
-  e_number++;
+    printf("Enter goods' id: ");
+    scanf("%d",&g[e].id);
+    printf("Enter goods' name: ");
+    scanf("%s", g[e].name);
+    printf("Enter goods' price($): ");
+    scanf("%f", &g[e].price);
+    printf("Enter goods' discount: ");
+	scanf("%f",&g[e].discount);
+	printf("Enter goods amount: ");
+	scanf("%d",&g[e].amount);         
+  e++;
 }
+
+
+void inquiry_data(Goods g[]){
+	
+	char name[20];
+	int id;
+	int choice;
+	
+	printf("You can inquiry goods' data by \n"
+	       "1 id\n"
+	       "2 name\n");
+	
+	scanf("%d",&choice);
+	
+	switch(choice){
+		case 1:
+			printf("Please enter the id: ");
+			
+			scanf("%d",&id);
+	
+			for( int i = 0 ; i < e;i++){
+				if (g[i].id == id){
+					printf("Goods' info of %d :\n"
+			 		      "\tid: %d\n"
+			   		    "\tname: %s\n"
+			  		     "\tprice: %0.2f\n"
+			    		   "\tdiscount: %0.2f\n"
+			     		  "\tamount: %d\n",
+			       g[i].id,
+			       g[i].id,
+			       g[i].name,
+			       g[i].price,
+			       g[i].discount,
+			       g[i].amount);
+			       return;
+				}
+			}
+			printf("无效查询\n\n");
+			break;
+		case 2:
+			printf("Please enter the name: ");
+			
+			scanf("%s",name);
+	
+			for( int i = 0 ; i < e;i++){
+				if (!strcmp( g[i].name,name)){
+					printf("Goods' info of %s :\n"
+			 		      "\tid: %d\n"
+			   		    "\tname: %s\n"
+			  		     "\tprice: %0.2f\n"
+			    		   "\tdiscount: %0.2f\n"
+			     		  "\tamount: %d\n",
+			       g[i].name,
+			       g[i].id,
+			       g[i].name,
+			       g[i].price,
+			       g[i].discount,
+			       g[i].amount);
+				   return;
+				}
+			}
+		default:
+			printf("无效查询\n\n");
+			break;
+	}
+	
+}
+	
+
