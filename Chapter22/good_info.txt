@@ -1,0 +1,6 @@
+id: 0001;
+name: kfdykme;
+price: 22.2;
+discount: 0.7;
+amount: 1;
+remain: 1;
