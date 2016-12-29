@@ -21,13 +21,11 @@ map[y][x] = let;
   do {
     rN = rand() % 4;
     
-    if ( map[y][x-1] != '.'
-    	&& map[y][x+1] != '.'
-    	&& map[y-1][x] != '.'
-    	&& map[y+1][x] != '.
-    	|| (x)') 
-    	break; 
-    	
+    let = (map[y][x-1] != '.' || x==0)
+    	&& (map[y][x+1] != '.'|| x == W)
+    	&& (map[y-1][x] != '.'|| y == 0)
+    	&& (map[y+1][x] != '.'|| y == W)
+  ? 'Z'  : let;	
     switch(rN){
     	case 0://Left
     	  if ( x  > 0 && map[y][x-1] == '.'){
@@ -54,7 +52,6 @@ map[y][x] = let;
     	  }
     	  break;
     }	
-  //  printf(" rN = %dlet = %c  x = %d  y = %d  map[][] =   %c\n",rN,let,x,y,map[x][y]);
     
     
   }while(let != 'Z');
