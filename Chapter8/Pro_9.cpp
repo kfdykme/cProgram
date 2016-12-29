@@ -3,7 +3,8 @@
 #include <stdbool.h>
 
 #define W 10
-
+// 最终修改无bug版
+// BUG:  当字母上下左右任一不存在字符时 判断是否为'.'就无效了
 int main(void) {
   char map[W][W];
   char let = 'A' ;
