@@ -2,37 +2,69 @@
 
 #define LEN 999 
 #define DEFAULT -10
-#define CANCUT *p == '.'||*p == ','||*p == '!'||*p == '?'||*p == ':'||*p == ';'||*p == ' '
+#define CANCUT str[i] == '.'||str[i] == ','||str[i] == '!'||str[i] == '?'||str[i] == ':'||str[i] == ';'||str[i] == ' '
 int main(void){
-//	int strMainlyLength = 1;
-	char str[LEN], *p = str,*p2 = str,*p3,*p1 = str;
-	char middlestr[LEN];
+	char str[LEN],  *c = str;
+	char middleString[LEN];
 	int wordStart = DEFAULT,wordEnd = DEFAULT;
-	char c;
+	char a;
+	
 	
 	printf("Enter a sentence: ");
 	
 	
-	while ((*(p++) = getchar()) != '\n');
-	p--;
-	
+	while((*c++ = getchar()) != '\n');
+	//c--;
+	*c = '\0';
+	printf("%s\n",str);
 	printf("Reversal of sentence: ");
-	while (p2++ != p){
-		if (CANCUT){
-			*p3 = *(p2-1);
-			c = *p3;
-			*p3-- = *p1;
-			*p1++ = c;
+	//int c - str; = c - str;
+	for (int i = c - str-1; i > -1  ;i--){
+		if (i == 0){
+			wordStart = 0;
+			if (wordStart != DEFAULT && wordEnd != DEFAULT){
+			//printf("\nend = %d start = %d",wordEnd,wordStart);
+			for (int j = 0;j <= wordEnd - wordStart;j++){
+				middleString[j] = str[wordEnd  -j];
+			}
+			
+			for (int j = 0;j <= wordEnd - wordStart;j++){
+				
+				str[wordStart +j] = middleString[j];
+			}
+				
+			wordEnd = wordStart; 
+			wordStart = DEFAULT;
+			
+			}
 		}
-		printf("%c\n",*p2);
+		if ( CANCUT){
+			wordStart = wordEnd != DEFAULT && wordStart == DEFAULT ? i : wordStart;
+			wordEnd = wordEnd == DEFAULT && wordStart == DEFAULT ? i:wordEnd;
+			
+			//printf("\n'z' 'a' if is done!\n");
+			}
+		if (wordStart != DEFAULT && wordEnd != DEFAULT){
+			//printf("\nend = %d start = %d",wordEnd,wordStart);
+			for (int j = 1;j < wordEnd - wordStart;j++){
+			//	printf("\nmS[%d] (%c) = s[%d] (%c) ",j,middleString[j],wordEnd -j,str[wordEnd -j]);
+				middleString[j] = str[wordEnd  -j];
+			}
+			for (int j = 1;j < wordEnd - wordStart;j++){
+			//	printf("\ns[%d] (%c) = mS[%d] (%c) ",wordStart +j,str[wordStart +j],j,middleString[j]);
+				
+				str[wordStart +j] = middleString[j];
+				}
+			wordEnd = wordStart; 
+			wordStart = DEFAULT;
+		}
 	}
 	
-	
-	
-	for (; (p--) - str > 0  ;)
-		printf("%c",*p);
-		//printf("\n str[%d] = %c\t strMainlyLength = %d\ti = %d",i,*p,strMainlyLength,i);
-	
+	for (int i = c - str-2; i > 0  ;i--){
+		printf("%c",str[i]);
+		printf("\n str[%d] = %c\t c - str; = %d\ti = %d",i,str[i],c - str,i);
+	}
+		printf("%c",str[c - str-1]);
 	return 0;
 	
 }
