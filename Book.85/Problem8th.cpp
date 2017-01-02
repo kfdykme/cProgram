@@ -23,7 +23,7 @@ int main(void){
 		
 		dayOfWeek += 1;
 		
-		if ( dayOfWeek == 7){
+		if ( dayOfWeek == 8){
 			printf("%4d\n", d);
 			dayOfWeek = 1;
 		} else {
