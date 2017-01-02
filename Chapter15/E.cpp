@@ -183,6 +183,7 @@ void edit(Goods g[]) {
 void enter(Goods g[]) {
 
   char id[30];
+  Goods *g2 = (Goods *) malloc(sizeof(Goods));
 getid:
   printf("Enter goods' id: ");
   scanf("%s", id);
@@ -191,19 +192,20 @@ getid:
       printf("Enter sutable id!\n");
       goto getid;
     }
-
-  strcpy(g[e].id, id);
+	
+  strcpy(g2->id, id);
   printf("Enter goods' name: ");
-  scanf("%s", g[e].name);
+  scanf("%s", g2->name);
   printf("Enter goods' price($): ");
-  scanf("%s", &g[e].price);
+  scanf("%s", g2->price);
   printf("Enter goods' discount: ");
-  scanf("%s", &g[e].discount);
+  scanf("%s", g2->discount);
   printf("Enter goods amount: ");
-  scanf("%d", &g[e].amount);
+  scanf("%d", &g2->amount);
   printf("Enter goods remain: ");
-  scanf("%d", &g[e].remain);
-  e++;
+  scanf("%d", &g2->remain);
+  g[e++]=*g2; 
+
 }
 
 void goods_info_ini() {
