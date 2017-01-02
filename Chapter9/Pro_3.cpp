@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void generate_random_walk(char walk[][10]);
 void print_array(char walk[][10]);
@@ -25,6 +26,7 @@ void generate_random_walk(char walk[][10]){
 		}
 	}
 	walk[y][x] = letter;
+	srand(time(NULL));
 	ranNumber = rand() % 4;
 	
 	while(letter != 'Z'&& letter != 'Z' +1 ){
@@ -65,9 +67,9 @@ void generate_random_walk(char walk[][10]){
 
 void print_array(char walk[][10]){
 	printf("\n");
-	for (int y = 0;y  </10;y++){
+	for (int y = 0;y  <10;y++){
 		for (int x = 0; x < 10;x++){
-			printf("%c",walk[y][x]);
+			printf("%c ",walk[y][x]);
 			if (x==9)
 			  printf("\n");
 		}
