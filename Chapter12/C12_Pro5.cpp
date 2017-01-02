@@ -1,70 +1,66 @@
 #include <stdio.h>
+#include <string.h>
 
 #define LEN 999 
 #define DEFAULT -10
-#define CANCUT str[i] == '.'||str[i] == ','||str[i] == '!'||str[i] == '?'||str[i] == ':'||str[i] == ';'||str[i] == ' '
+#define CANCUT *c == '.'||*c == ','||*c == '!'||*c == '?'||*c == ':'||*c == ';'||*c == ' '
 int main(void){
 	char str[LEN],  *c = str;
-	char middleString[LEN];
-	int wordStart = DEFAULT,wordEnd = DEFAULT;
-	char a;
+	char word[LEN]; 
+	char lastChar;
 	
 	
 	printf("Enter a sentence: ");
-	
-	
+
+///////////////////////////////////////////////////	读取句子	
 	while((*c++ = getchar()) != '\n');
-	//c--;
-	*c = '\0';
-	printf("%s\n",str);
-	printf("Reversal of sentence: ");
-	//int c - str; = c - str;
-	for (int i = c - str-1; i > -1  ;i--){
-		if (i == 0){
-			wordStart = 0;
-			if (wordStart != DEFAULT && wordEnd != DEFAULT){
-			//printf("\nend = %d start = %d",wordEnd,wordStart);
-			for (int j = 0;j <= wordEnd - wordStart;j++){
-				middleString[j] = str[wordEnd  -j];
-			}
-			
-			for (int j = 0;j <= wordEnd - wordStart;j++){
-				
-				str[wordStart +j] = middleString[j];
-			}
-				
-			wordEnd = wordStart; 
-			wordStart = DEFAULT;
-			
-			}
-		}
-		if ( CANCUT){
-			wordStart = wordEnd != DEFAULT && wordStart == DEFAULT ? i : wordStart;
-			wordEnd = wordEnd == DEFAULT && wordStart == DEFAULT ? i:wordEnd;
-			
-			//printf("\n'z' 'a' if is done!\n");
-			}
-		if (wordStart != DEFAULT && wordEnd != DEFAULT){
-			//printf("\nend = %d start = %d",wordEnd,wordStart);
-			for (int j = 1;j < wordEnd - wordStart;j++){
-			//	printf("\nmS[%d] (%c) = s[%d] (%c) ",j,middleString[j],wordEnd -j,str[wordEnd -j]);
-				middleString[j] = str[wordEnd  -j];
-			}
-			for (int j = 1;j < wordEnd - wordStart;j++){
-			//	printf("\ns[%d] (%c) = mS[%d] (%c) ",wordStart +j,str[wordStart +j],j,middleString[j]);
-				
-				str[wordStart +j] = middleString[j];
-				}
-			wordEnd = wordStart; 
-			wordStart = DEFAULT;
-		}
+	c-=2 ;
+	if (CANCUT){
+		lastChar = *c;
+		*c = '\0';
+	}
+	else{
+		lastChar = ' '; 
+		*++c = '\0';}
+//	printf("%s\n",str);
+
+///////////////////////////////////////////////////	切分成单词数组 对单词进行倒序
+
+char *s = str , *e = str;
+char *w = word;
+while (1){
+	
+	if ( *e == ' ' || *e == '\0' || *e == '?'|| *e == '.'|| *e == '!' || *e == ':' ||*e == ';'){
+	
+	strcpy(w,s);
+	*(w + (e -s) +1) = '\0';
+	//printf("%s\n",w); 	
+	for ( int i = e - s-1;i  >=0; i--){
+		//printf("*w[%d] = %c\n", i , *(w+i));
+		*s++ = *(w+i);
+		//printf("*s[%d] = %c\n", i , *(s-1));
+	}
+	s++;
 	}
 	
-	for (int i = c - str-2; i > 0  ;i--){
-		printf("%c",str[i]);
-		printf("\n str[%d] = %c\t c - str; = %d\ti = %d",i,str[i],c - str,i);
-	}
-		printf("%c",str[c - str-1]);
+	
+	if( *e == '\0')
+		break;
+	*e++;
+	
+}
+
+
+
+///////////////////////////////////////////////////	反向打印句子
+
+	
+	printf("Reversal of sentence: ");
+
+	while (c-- > str)
+	printf("%c",*c);
+	
+	if ( lastChar != ' ') printf("%c",lastChar);
 	return 0;
 	
 }
