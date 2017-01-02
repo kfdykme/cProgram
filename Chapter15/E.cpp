@@ -217,12 +217,15 @@ void goods_info_ini() {
   // g = AGo;
   if (fp == NULL) {
     printf("Can't open %s", FILE_NAME);
-    exit(0);
-  }
+	return;
+//    exit(0);
+  }else
+	  printf("Had open %s\n", FILE_NAME);
+
+  
   char s[100];
   int i;
-  printf("Had open %s\n", FILE_NAME);
-
+  
   while (1) {
     fscanf(fp, "id:%s\n", s);
     strcpy(g->id, s);
