@@ -3,9 +3,8 @@
 int main(void){
 	char c;
 	printf("Enter phone number: ");
-	scanf("%c",&c);
-	while(c != '\n'){
-		scanf("%c",&c);
+	;
+	while((c = getchar()) != '\n'){
 		switch(c){
 			case 'A' : case 'B': case 'C': 
 				printf("2");
@@ -41,11 +40,12 @@ int main(void){
 			case '7' :
 			case '8' :
 			case '9' :
+			case '0':
 			 printf("%c",c);
 			 break;
 		}	
 	}
-			printf("\nThis program is stoped");
+		//	printf("\nThis program is stoped");
 		
 	return 0;
 }
