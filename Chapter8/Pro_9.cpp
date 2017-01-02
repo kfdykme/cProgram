@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
 #define W 10
 // 最终修改无bug版
@@ -18,7 +19,7 @@ int main(void) {
   }
 
 map[y][x] = let;
-    
+   srand(time(NULL)); 
   do {
     rN = rand() % 4;
     
