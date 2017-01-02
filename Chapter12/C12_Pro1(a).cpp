@@ -3,12 +3,14 @@
 
 int main(void){
 	char c[M];
-	int n = 0;
+	int n = 0;	
 	printf("Enter a message:");
 	while ((c[n++] = getchar()) != '\n'
 		&& n != M);
+//	printf("%d",p-c);
 	printf("Reversal is: ");
-	while (n-- !=0)
-		printf("%c",c[n-1]);
+	n--;
+	while (n-- >0)
+		printf("%c",c[n]);
 	return 0;
 }
