@@ -278,7 +278,7 @@ void inquiry(Goods g[]) {
 
     for (int i = 0; i < MAX; i++) {
       if (!strcmp(g[i].id, id)) {
-        printf("Goods' info of %d :\n"
+        printf("Goods' info of %s :\n"
                "\tid: %s\n"
                "\tname: %s\n"
                "\tprice: %s\n"
