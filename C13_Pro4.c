@@ -1,6 +1,36 @@
 #include <stdio.h>
 #include <string.h>
 
+int main(int argc, char *argv[]){
+	for (int j = argc-1 ; j > 1;j--)
+		printf("%s ",argv[j]);
+		
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+#include <stdio.h>
+#include <string.h>
+
 
 int main(void){
 	int i = 0;
@@ -15,3 +45,5 @@ int main(void){
 		printf("%s ",word[j]);
 	return 0;
 }
+
+*/
