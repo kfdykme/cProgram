@@ -4,7 +4,7 @@
 
 #define N 10 
 #include "quicksort.h"
-#include "quicksort.c"
+//#include "quicksort.c"
 
 int main(void){
 	int a[N], i;
