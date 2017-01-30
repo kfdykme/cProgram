@@ -10,7 +10,7 @@ typedef struct {
 typedef struct {
 	time dep;
 	
-	time arr;
+	time arr;1
 	
 } TimeTable;
 
@@ -64,4 +64,6 @@ int main(void){
 	
 	return 0;
 	}
-		
+		  
+		  
+		  
