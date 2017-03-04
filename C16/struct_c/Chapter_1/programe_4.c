@@ -8,6 +8,8 @@
 //求根号 sqrt(n)
 
 void doFunction(float x[],float a, float b , float c){
+	
+	if(a != 0){
 	//ax2+bx+c = 0
 	float dito = b*b - 4 * a * c;
 	if (dito < 0){
@@ -17,13 +19,16 @@ void doFunction(float x[],float a, float b , float c){
 		x[1] = (((-1*b) - sqrt(dito))/(2*a));
 		printf("x1 = %g, x2 = %g\n",x[0],x[1]);
 	}
+	} else {
+		printf("a != 0 !!!!");
+	}
 }
 	
 int main(void){
 	float a[2];
 
 
-	doFunction(a,4,4,1);
+	doFunction(a,0,4,1);
 
 	return 0;
 }
