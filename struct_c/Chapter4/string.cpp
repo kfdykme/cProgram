@@ -104,6 +104,69 @@ void SeqStringAssign(string *S, string *T)
 		exit(0);
 	}
  }
+ 
+ int SimpleMatching(string *S,string *p)
+ {
+ 	int i = 0;
+ 	while(i<= (S->length-p->length);
+ 	{
+ 		int j = 0;
+ 		while(S->str[j] == P->str[i])
+ 		{
+ 			i++;
+ 			j++;
+ 		}
+ 		if(j == p->length)
+ 			return i-p->length;
+ 		i = i-j+1;
+ 	}
+ 	return -1;
+ }
+ 
+ int KMPMatching(string *S, string *p)
+ {
+ 	int *next;
+ 	findnext(p,next);
+ 	int i, j;
+ 	i = 0;
+ 	j = 0;
+ 	while(i <= (S->length - p->length)
+ 	{
+ 		while(j == -1 
+ 		|| (j< p->length 
+ 			&& s->str[i] == p->str[j])
+ 		{
+ 			i++;
+ 			j++;
+ 		}
+ 		if(j == p->length)
+ 			return i-p->length;
+ 		j = next[j];
+ 	}
+ 	
+ 	return -1;
+ 	
+ }
+ 
+ void findnext(string *p, int *next)
+ {
+ 	next[0] = -1;
+ 	int j = 0, k = -1;
+ 	while(j <p->length)
+ 	{
+ 		while (k==0
+ 		|| p->str[j] == p->str[k])
+ 		{
+ 			j++;
+ 			k++;
+ 			next[j]=k;
+ 		}
+ 		k =next[k];
+ 	}
+ }
+ 
+ 
+ 		
 
 int main(void)
 {
