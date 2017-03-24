@@ -90,11 +90,11 @@ void InOrderTraverse(BiTree BT)
 
 void InOrderNoRec(BiTree BT)
 {
-	stack *S;
+	Stack *S;
 	
-	BiTree = p = BT->root;
+	BiTree  p = BT->root;
 	while ((NULL != p) 
-		|| (S->top != NULL)
+		|| (S->top != NULL))
 	{
 		if(NULL != p)
 		{
@@ -123,9 +123,9 @@ void PostOrderTraverse(BiTree BT)
 
 void PostOrderNoRec(BiTree BT)
 {
-	stack *S;
-	stack *tag;
-	BitTree p = BT->root;
+	Stack *S;
+	Stack *tag;
+	BiTree p = BT->root;
 	while ((NULL != p) 
 		|| S->top != NULL)
 	{
@@ -137,7 +137,8 @@ void PostOrderNoRec(BiTree BT)
 		}
 		if(S->top != NULL)
 		{
-			if((Pop(tag))->data == 1)
+			StackNode* a = Pop(tag);
+			if((a->data->data == 1))
 			{
 				p = S->top->data;
 				Pop(S);
@@ -146,17 +147,29 @@ void PostOrderNoRec(BiTree BT)
 			}
 			else
 			{
-				p = S->top;
+				p = S->top->data;
 				if (S->top != NULL)
 				{
 					p = p->rchild;
 					Pop(S);
-					Push(tag,1);
+					BiTree a;
+					a->data = 1;
+					Push(tag,a);
 				}
 			}
 		}
 	}
 }
+
+void InitTree(BiTree BT)
+{
+	BT->rchild = NULL;
+	BT->lchild = NULL;
+	BT->data = NULL;
+}
+
+
+
 
 
 int main(void)
