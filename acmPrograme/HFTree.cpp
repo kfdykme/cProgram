@@ -12,8 +12,23 @@ struct TreeNode{
 typedef struct TreeNode HFTreeNode;
 typedef HFTreeNode HuffmanTree;
 
+
 void Select(HuffmanTree *HT, int g, int *s1, int *s2);
 void CreateHuffmanTree(HuffmanTree T[],int n);
+int main(void){
+
+	HuffmanTree HT[MAXSIZE];
+	CreateHuffmanTree(HT,5);
+	
+	for (int i =1 ;  ;i++){
+		printf("w:%d p:%d l:%d r:%d \n",HT[i].weight, HT[i].parent, HT[i].lchild, HT[i].rchild);
+		if(!HT[i].parent)
+			break;
+	}
+	return 0;
+}
+
+
 
 void CreateHuffmanTree(HuffmanTree T[], int n){
 	int i, p1, p2;
@@ -59,9 +74,12 @@ void Select(HuffmanTree *HT,int g, int *s1, int *s2){
 	
 	for (j =1;j<=g;j++)
 	{
-		if ((HT[j].weight <= HT[k].weight)
+		if ((HT[j].weight <= HT[*s1].weight)
 			&& (HT[j].parent == 0))
-			*s1=j;
+		{
+			*s1 = j;
+			
+		}
 	}
 	
 	for (m = 1; m <=g;m++)
@@ -76,14 +94,10 @@ void Select(HuffmanTree *HT,int g, int *s1, int *s2){
 	
 	for (n=1; n<= g;n++)
 	{
-		if((HT[n].weight<HT[m].weight)
+		if((HT[n].weight<HT[*s2].weight)
 			&&(HT[n].parent == 0)
 			&&(n != *s1))
 				*s2 =n;
 	}
 }
 
-int main(void){
-	
-	return 0;
-}
