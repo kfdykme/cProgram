@@ -37,13 +37,15 @@ char* TreeCreatFromInts(Tree *root,char * datas,int mG, int cG){
 	if(cG<=mG)
 	{		
 	
-	//	printf("left %d %d\n",cG, mG);
+	
+		printf("left %c %d %d\n",*(datas+1),cG, mG);
 		datas = TreeCreatFromInts(
 				root->lc,
 				++datas,
 				mG,
 				cG+1);				
-		printf("right %d %d\n",cG, mG);
+		printf("right %c %d %d\n",
+		*(datas+1),cG, mG);
 		datas = TreeCreatFromInts(
 				root->rc,
 				++datas,
@@ -60,10 +62,12 @@ void PreOrderTraverse(Tree *t)
 {
 	if(t !=NULL)
 	{
-		printf("%c",t->data);
-		if(t->lc != NULL)
+		printf("%c\n",t->data);
+		
+		printf("left:");
 		PreOrderTraverse(t->lc);
-		if(t->rc != NULL)
+		
+		printf("right:");
 		PreOrderTraverse(t->rc);
 	}
 }
