@@ -1,97 +1,99 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct node{
+	int d;
+	struct node *next;
+} Node;
 
+typedef struct {
+	Node *head;
+} CirLink;
 
-struct node{
-	int first;
-	int last;
-	int *q;
-	int M;
-};
-
-typedef struct node Queue;
-
-void insert(Queue *Q,int e);
-int deleteQu(Queue *Q);
-int isEmpty(Queue *Q);
-int isFullQu(Queue *Q);
-
-int isFullQu(Queue *Q)
-{
-//	printf("isFull\n");
-//	printf("firsrt %d last %d\n",Q->first, Q->last);
-	if((Q->last +1  ) % Q->M == Q->first)
+void initCirLink(CirLink *L);
+void inCirLink(CirLink *L,int e);
+Node* getCirLink(CirLink *L,int e);
+void deCirLink(CirLink *L,int e);
+void deAllCirLink(CirLink *L,int e);
+void deAllCirLink(CirLink *L,int e){
+		Node *p,*p2;
+	p = L->head->next;
+	p2 = p->next;
+	while ( p != L->head)
 	{
-			printf("is Full\n");
-			return 1;
-	} else {
-		return 0;
+		if(p2->d == e)
+		{
+			deCirLink(L,e);
+		}
+	//	printf("%d %d\n",p->d,p2->d);
+		p = p->next;
+		p2 = p2->next;
 	}
+
+}
+void initCirLink(CirLink *L)
+{
+	L->head->next = L->head;
+}
+
+void inCirLink(CirLink *L,int e)
+{
+	Node *p ;
 	
-}
-
-void insert(Queue *Q,int e)
-{
-//	printf("insert start\n");
-
-						
-	if (!isFullQu(Q)){
-		
-		if (Q->last +1 == Q->M)
-			Q->last = -1;
-		Q->q[++Q->last] = e;
-		
+	p = (Node*)malloc( sizeof(Node));
 	
-	}
+	p->d = e;
+	p->next = L->head->next;
+	L->head->next = p;
 }
-
-int isEmpty(Queue *Q)
+Node* getCirLink(CirLink *L,int e)
 {
-	if (Q->first == Q->last)
-		return 1;
-	else 
-		return 0;
-}
-
-int deleteQu(Queue *Q)
-{
-	if (!isEmpty(Q))
+	Node *p;
+	p  = L->head->next;
+	while (p !=L->head )
 	{
-		if (Q->first + 1 == Q->M)
-			Q->first = -1;
-		int e = Q->q[++Q->first];
-		return e;
+		if (p->d == e)
+			break;
+		p = p->next;
 	}
-	return -1;
+	return p;
 }
-
+void deCirLink(CirLink *L, int e)
+{
+	Node *p,*p2;
+	p = L->head->next;
+	p2 = p->next;
+	while ( p != L->head)
+	{
+		if(p2->d == e)
+		{
+			p->next = p2->next;
+			p2 = p->next->next;
+			free(p2);
+			return ;
+		}
+	//	printf("%d %d\n",p->d,p2->d);
+		p = p->next;
+		p2 = p2->next;
+	}
+}
 int main(void)
 {
-	Queue Q;
-	Q.M = 100;
-	Q.q  = (int*)malloc(sizeof (int) *(Q.M+1));
-	Q.first = 0;
-	Q.last = 0;
-	int testData[100] = {3,2,1,3,-1,3,2,1,0,9,11};	
-	for  (int i = 0 ;  ; i++)
+	CirLink L;
+	L.head =(Node*)malloc( sizeof(Node));
+	
+	initCirLink(&L);
+	int a[100] = {0,1,2,3,4,5,3,4,2,1,1,};
+	for (int i = 0; i < 12; i++)
+		inCirLink(&L,a[i]);
+	deAllCirLink(&L,1);
+	Node *p,*p2;
+	p = L.head->next;
+	p2 = p->next;
+	while ( p != L.head)
 	{
-		if (testData[i] > 0)
-			insert(&Q,testData[i]);
-		if (testData[i] == 0)
-			break;
-		if (testData[i] == -1)
-			deleteQu(&Q);
-		
-			
-
+		printf("%d %d\n",p->d,p2->d);
+		p = p->next;
+		p2 = p2->next;
 	}
-	printf("printf\n");
-	while (!isEmpty(&Q))
-	{
-		int d = deleteQu(&Q);
-		printf("%d",d);
-
-	}
-	return 0;
 }
