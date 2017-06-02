@@ -20,21 +20,22 @@ int sortpass(int *data, int left, int right);
 int binser(int *data, int key, int left, int right);
 
 int binser(int *data, int key, int left, int right){
-  if(left == right)
-    {
+  int mid = (left + right)/2;
+  if (data[mid]  == key )
+   return mid;
+  if(left == mid)
+  {
       printf("can't find");
       return -1;
-    }
-  int mid = (left + right)/2;
-printf("a\n");
+  }
+  //printf("left = %d right = %d mid = %d\n",left, right ,mid);
   if (data[mid] < key) {
+  //  printf("%d<%d\n",data[mid],key);
     return binser(data,key, mid, right);
   } else if (data[mid] > key)
   {
+    //printf(">\n");
     return binser(data,key, left, mid);
-  } else if (data[mid]  == key )
-  {
-    return mid;
   }
 
 }
@@ -131,11 +132,12 @@ int main(void){
   printSQL(&S);
 
   printf("search new:\nenter a number:\n");
-  //while (1) {
-//    int a;
-    //scanf("%d",&a);
-//    printf("is in %d",binser(S.data,1,0,S.lenght));
-  //}
+  while (1) {
+    int a;
+    scanf("%d",&a);
+    //printf("%d",a);
+    printf("is in %d\n",binser(S.data,a,0,S.lenght));
+  }
   return 0;
 
 }
