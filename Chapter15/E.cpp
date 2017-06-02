@@ -77,7 +77,7 @@ int main(void) {
 		fprintf(fp,"remain: %d\n",AGo[i].remain);
       }
      fprintf(fp,"id: end\n");
-		 
+
       fclose(fp);
       printf("Saved!!\n");
       return 0;
@@ -192,7 +192,7 @@ getid:
       printf("Enter sutable id!\n");
       goto getid;
     }
-	
+
   strcpy(g2->id, id);
   printf("Enter goods' name: ");
   scanf("%s", g2->name);
@@ -204,7 +204,7 @@ getid:
   scanf("%d", &g2->amount);
   printf("Enter goods remain: ");
   scanf("%d", &g2->remain);
-  g[e++]=*g2; 
+  g[e++]=*g2;
 
 }
 
@@ -222,10 +222,10 @@ void goods_info_ini() {
   }else
 	  printf("Had open %s\n", FILE_NAME);
 
-  
+
   char s[100];
   int i;
-  
+
   while (1) {
     fscanf(fp, "id:%s\n", s);
     strcpy(g->id, s);

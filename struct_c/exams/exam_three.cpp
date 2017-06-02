@@ -11,7 +11,7 @@
 
 typedef struct {
 	char vex[M];
-	int edge[M][M];	
+	int edge[M][M];
 	int vn ;
 	int en;
 } AdjGraph;
@@ -38,24 +38,24 @@ int isLianTong(AdjGraph G,char tc,char hc)
 	t = locate(G,tc);
 	h = locate(G,hc);
 	if(t == -1 || h == -1) return 0;
-	
+
 	int tempt = t;
-	
-	int is = 0;	
-		
+
+	int is = 0;
+
 		for (int i =0; i < G.vn; i++)
 		{
-	
+
 			if(G.edge[tempt][i] != infinity)
 			{
-	 			tempt = i;	 			
+	 			tempt = i;
 			}
 			is += isLianTong(G,tempt,h);
 			if ( tempt == h) is++;
 		}
-		
+
 	return is;
-	
+
 }
 
 void MiniSpanTree_Kruskal(AdjGraph G)
@@ -66,7 +66,7 @@ void MiniSpanTree_Kruskal(AdjGraph G)
 	int max = 0;
 	for (int j = 0 ; j < G.vn; j++)
 	{
-		
+
 		for(int i = 0 ;i < G.vn;i++)
 			if(G.edge[j][i] != infinity)
 			{
@@ -75,22 +75,22 @@ void MiniSpanTree_Kruskal(AdjGraph G)
 
 				if (min > t){
 				printf("Bigger\n");
-				min = t;	
-				} 
+				min = t;
+				}
 				if(max < t){
 					max =t;
 				}
-				
+
 				E[En].t = G.vex[j];
 				E[En].h = G.vex[i];
 				E[En].w= G.edge[j][i];
 				En++;
 			}
-			
+
 	}
-	
+
 	printf("min %d max %d",min,max);
-	
+
 	Edge E2[En];
 	int En2 = 0;
 	while(min <= max)
@@ -99,53 +99,53 @@ void MiniSpanTree_Kruskal(AdjGraph G)
 		{
 			if (E[i].w == min)
 			{
-				
+
 				E2[En2] = E[i];
 				En2++;
 			}
 		}
 		min++;
-		
+
 	}
-	
+
 	AdjGraph G2 = G;
-	
+
 	for (int j = 0 ; j < G2.vn; j++)
 		for(int i = 0 ;i < G2.vn;i++)
 		G2.edge[j][i] = infinity;
-		
-	int sum = 0;	
+
+	int sum = 0;
 	for (int i = 0; i < G2.vn; i++ )
 	{
-		printf("\n%c ->%c(%d)",E2[i].t,E2[i].h,E2[i].w); 
+		printf("\n%c ->%c(%d)",E2[i].t,E2[i].h,E2[i].w);
 		if(!isLianTong(G2,E2[i].t,E2[i].h))
-		{ 
+		{
 			G2.edge[locate(G2,E2[i].t)][locate(G2,E2[i].h)]= E2[i].w;
 			sum += E2[i].w;
 		}
 	}
-	
-	
+
+
 	printf("\nG2\n");
-	
+
 	for (int j = 0 ; j < G2.vn; j++)
 		for(int i = 0 ;i < G2.vn;i++)
 			if(G2.edge[j][i] != infinity)
 				printf("%c -> %c [%d]\n",G2.vex[j],G2.vex[i],G2.edge[j][i]);
 
-	
+
 	printf("lowcost %d",sum);
-	
+
 }
 
 int main(void){
-	
+
 	// init
 	AdjGraph G;
-	
-	
+
+
 	G.vn = 0;
-	G.en = 14;	
+	G.en = 14;
 	printf("enter vex:\n");
 	while(1){
 		printf("No %d : ",G.vn);
@@ -153,16 +153,16 @@ int main(void){
 		getchar();
 		if(G.vex[G.vn] == '0') break;
 		G.vn++;
-		
+
 	}
- 
-			
-	
-	 
+
+
+
+
 	for (int j = 0 ; j < G.vn; j++)
 		for(int i = 0 ;i < G.vn;i++)
 			G.edge[j][i] = infinity;
-	
+
 	while(1){
 		char tc,hc;
 		int w,t,h;
@@ -171,12 +171,12 @@ int main(void){
 		t = locate(G,tc);
 		h = locate(G,hc);
 		if(w == 0) break;
-		
+
 		G.edge[t][h] = w;
 		G.en++;
-		
+
 	}
-	
+
 	/*
 	G.edge[0][1] = 4;
 	G.edge[0][2] = 7;
@@ -194,9 +194,9 @@ int main(void){
 	G.edge[6][7] = 2;
 */
 	MiniSpanTree_Kruskal(G);
-	
-	
-	
-	 
+
+
+
+
 	return 0;
-} 
+}
