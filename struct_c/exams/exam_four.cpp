@@ -90,7 +90,7 @@ void printSQL(SQL *S)
 }
 
 void quicksort(int *data, int left, int right){
-  printf("a\n" );
+  //printf("a\n" );
   if(right - left  >= 3)
   {
     int pivot,i,j;
@@ -115,7 +115,7 @@ void quicksort(int *data, int left, int right){
     quicksort(data,mid+1,right);
   } else
   {
-    printf("jieshu\n");
+  //  printf("jieshu\n");
     sort(data,left, right);
 
   }
