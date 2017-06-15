@@ -35,7 +35,7 @@ void printCode(Tree *t){
 	printf("printfCode\n");
   int len = 0;
   for (int i = 0 ; i < M ; i++)if(t[i].l== NULL && t[i].r == NULL && t[i].w != 0)len++;
-  printf("len is %d\n",len);
+  //printf("len is %d\n",len);
   Code code[2*M];
   int cN = 0;
   char s[M+1];
