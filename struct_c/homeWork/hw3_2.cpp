@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 #define MAXSIZE 1000
 
 //save HuffmanTree's vex number
@@ -36,10 +38,10 @@ void charSetHuffmanEncoding(HuffmanTree *T, HuffmanCode C)
 	char *code;
 	code = (char*)malloc(sizeof(char)*(number+1));
 	code[number] = '\0';
-	
+
 	for ( int i = 1; ; i++)
 	{
-		
+
 		if (T[i].parent == 0) break;
 		C[i].vex = T[i].vex;
 		int start = number;
@@ -48,10 +50,10 @@ void charSetHuffmanEncoding(HuffmanTree *T, HuffmanCode C)
 		{
 			if (T[parent].lchild == child)
 				code[--start] = '0';
-			else if (T[parent].rchild = child)
+			else if (T[parent].rchild == child)
 				code[--start] = '1';
 			child = parent;
-			
+
 		}
 		C[i].bits = (char*)malloc(sizeof(code[start]));
 		strcpy(C[i].bits,code+start);
@@ -72,8 +74,8 @@ int main(void){
 
 void printfHuffmanTree(HuffmanTree *T){
 	for (int i =1 ;  ;i++){
-		
-	if (T[i].vex == '\0') 
+
+	if (T[i].vex == '\0')
 		T[i].vex = 'X';
 		printf("No.%d node vex: %c w:%d p:%d l:%d r:%d \n",i,T[i].vex,T[i].weight, T[i].parent, T[i].lchild, T[i].rchild);
 		if(!T[i].parent)
@@ -81,11 +83,11 @@ void printfHuffmanTree(HuffmanTree *T){
 	}
 
 	printf("Encoding start!\n");
-	
+
 	HuffmanCode C;
 	C = (CodeNode*)malloc(sizeof(CodeNode) * number+1);
 	charSetHuffmanEncoding(T, C);
-	
+
 	printf("Encoding end!\n");
 	for (int i = 1; i <= number; i++)
 	{
@@ -101,7 +103,7 @@ void CreateHuffmanTree(HuffmanTree T[], int n){
 	int m;
 	if (n <1)
 		return ;
-	
+
 	m = 2*n;
 	for (i =1;i<m;i++)
 	{
@@ -110,12 +112,12 @@ void CreateHuffmanTree(HuffmanTree T[], int n){
 		T[i].rchild =0;
 		T[i].weight =0;
 	}
-	
+
 	for (i =1;i<n;i++)
 	{
-		scanf(" %c %d",&T[i].vex,&T[i].weight);	
+		scanf(" %c %d",&T[i].vex,&T[i].weight);
 	}
-	
+
 	for (i = n; i <m-2;i++)
 	{
 		Select(T,i-1,&p1,&p2);
@@ -137,17 +139,17 @@ void Select(HuffmanTree *HT,int g, int *s1, int *s2){
 			break;
 		}
 	}
-	
+
 	for (j =1;j<=g;j++)
 	{
 		if ((HT[j].weight <= HT[*s1].weight)
 			&& (HT[j].parent == 0))
 		{
 			*s1 = j;
-			
+
 		}
 	}
-	
+
 	for (m = 1; m <=g;m++)
 	{
 		if ((HT[m].parent == 0)
@@ -157,7 +159,7 @@ void Select(HuffmanTree *HT,int g, int *s1, int *s2){
 			break;
 		}
 	}
-	
+
 	for (n=1; n<= g;n++)
 	{
 		if((HT[n].weight<HT[*s2].weight)

@@ -43,10 +43,10 @@ void printCode(Tree *t){
     if (t[i].p == NULL) break;
     int start = M;
     s[start] = '\0';
-    
-    
+
+
     Node *N;
-    
+
     N = &t[i];
     code[cN].c = N->c;
     //printf("%c\t",N->c );
@@ -76,7 +76,7 @@ void printCode(Tree *t){
 void printTree(Tree *t){
   int len = 0;
   for (int i = 0 ; i < M ; i++)if(t[i].w!= 0)len++;
-  printf("element len is %d\n",len);
+  //printf("element len is %d\n",len);
   printf("c w l r p\n");
   for(int i =0 ; ; i++){
       if(t[i].w == 0) break;
@@ -103,7 +103,7 @@ void select(Tree *t, int len,int &l,int &r){
   for(b = 0; b < len ; b++){
     if((t[b].p == NULL) && (t[b].w < t[l].w)){
       l = b;
-    
+
     }
   }
   for(c = 0 ; c< len; c++){
@@ -126,15 +126,14 @@ void createTree(Tree *t){
   //
   int len = 0;
   for (int i = 0 ; i < M ; i++)if(t[i].w!= 0)len++;
-  printf("element len is %d\n",len);
+  //printf("element len is %d\n",len);
 
   int mLen = 2*len -1;
   //
   int l,r;
   for(int i =len ; i < mLen;i++ ){
     select(t,i,l,r);
-    printf("smallest are %c and %c\n",
-    	t[r].c,t[l].c);
+    //printf("smallest are %c and %c\n",t[r].c,t[l].c);
     t[i].l = &t[l];
     t[i].r = &t[r];
     t[l].p = &t[i];
