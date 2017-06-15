@@ -32,26 +32,45 @@ int main(void){
 }
 
 void printCode(Tree *t){
+	printf("printfCode\n");
   int len = 0;
   for (int i = 0 ; i < M ; i++)if(t[i].l== NULL && t[i].r == NULL && t[i].w != 0)len++;
+  printf("len is %d\n",len);
   Code code[len];
+  int cN = 0;
   char s[M+1];
-  for(int i = 0 ; i; i++){
-    if(t[i].w == 0) break;
+  for (int i = 0 ; ; i++){
+    if (t[i].p == NULL) break;
+    int start = M;
+    s[start] = '\0';
+    
+    
     Node *N;
+    
     N = &t[i];
-    printf("%c\t",N->c );
+    code[cN].c = N->c;
+    //printf("%c\t",N->c );
 
     while(N){
-      printf("%c",N->c);
+    	if(N->p == NULL)break;
+    	else{
+    		if (N->p->l == N)
+    		{
+    			s[--start] = '0';
+    		} else if (N ->p->r == N){
+    			s[--start] = '1';
+    		}
+    	}
+		// printf("%c",N->c);
 
       N = N->p;
     }
-    printf("\n");
+    strcpy(code[cN++].s,s+start);
+   // printf("\n");
   }
 
 
-  //for(int i = 0; i < len ; i++)  printf("%c %s\n",code[i].c,code[i].s);
+  for(int i = 0; i < len ; i++)  printf("%c %s\n",code[i].c,code[i].s);
 }
 
 void printTree(Tree *t){
@@ -82,9 +101,9 @@ void select(Tree *t, int len,int &l,int &r){
   }
 
   for(b = 0; b < len ; b++){
-    if(t[b].p == NULL && t[b].w < t[l].w){
+    if((t[b].p == NULL) && (t[b].w < t[l].w)){
       l = b;
-      break;
+    
     }
   }
   for(c = 0 ; c< len; c++){
@@ -98,7 +117,6 @@ void select(Tree *t, int len,int &l,int &r){
   for(d = 0; d < len ; d++){
     if(t[d].p == NULL && t[d].w < t[r].w && d != l){
       r = d;
-      break;
     }
   }
 
@@ -113,11 +131,14 @@ void createTree(Tree *t){
   int mLen = 2*len -1;
   //
   int l,r;
-  for(int i =len ; i <= mLen;i++ ){
-    select(t,i-1,l,r);
+  for(int i =len ; i < mLen;i++ ){
+    select(t,i,l,r);
+    printf("smallest are %c and %c\n",
+    	t[r].c,t[l].c);
     t[i].l = &t[l];
     t[i].r = &t[r];
     t[l].p = &t[i];
+    t[r].p = &t[i];
     t[i].w = t[l].w + t[r].w;
     t[i].p = NULL;
     t[i].c = '+'+i;
